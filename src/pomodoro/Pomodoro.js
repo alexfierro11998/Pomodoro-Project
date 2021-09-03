@@ -128,7 +128,7 @@ function Pomodoro() {
 
   const stopButtonFunction = event => {
     event.preventDefault()
-    extraStuff = null;
+    barAndTimer = null;
     setSession(()=> {
       return{
         label: "Focusing",
@@ -184,8 +184,8 @@ function Pomodoro() {
       return nextState;
     });
   }
-   let extraStuff = null;
-   if(timerStatus && isTimerRunning) {extraStuff = <div>
+   let barAndTimer = null;
+   if(timerStatus && isTimerRunning) {barAndTimer = <div>
    <div className="row mb-2">
      <div className="col">
        <h2 data-testid="session-title">
@@ -212,7 +212,7 @@ function Pomodoro() {
    </div>
  </div>}
  else if(timerStatus){
-  extraStuff = <div>
+  barAndTimer = <div>
   <div className="row mb-2">
     <div className="col">
       <h2 data-testid="session-title">
@@ -339,7 +339,7 @@ function Pomodoro() {
           </div>
         </div>
       </div>
-      {extraStuff}
+      {barAndTimer}
     </div>
     
   );
