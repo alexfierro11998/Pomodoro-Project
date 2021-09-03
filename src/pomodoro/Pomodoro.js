@@ -64,12 +64,6 @@ function Pomodoro() {
     event.preventDefault();
     if(breakDuration + 1 >= 16 ) setBreakDuration(14)
     setBreakDuration(current => {
-      setSession(() => {
-        return {
-          label: "On Break",
-          timeRemaining: (current+1) * 60,
-        }
-      })
       
       return current+1
     })
@@ -80,16 +74,9 @@ function Pomodoro() {
     event.preventDefault();
     if(breakDuration -1 <= 0) setBreakDuration(2)
     setBreakDuration( current =>  {
-      setSession(() => {
-        return {
-          label: "On Break",
-          timeRemaining: (current-1) * 60,
-        }
-      })
-
+      
       return current-1
     })
-    
   }
 
   const focusIncrease = (event) => {
@@ -128,7 +115,7 @@ function Pomodoro() {
     {if(session.label === "Focusing"){
       const barFocus = focusDuration
       let currentBar = (((barFocus*60) - session?.timeRemaining)*100)/ (barFocus*60)
-      console.log(session?.timeRemaining)
+     
       return currentBar
     }
     else if(session.label === "On Break"){
@@ -138,7 +125,7 @@ function Pomodoro() {
     }}
     return 0
   }
-  console.log(barWidth(session))
+
   const stopButtonFunction = event => {
     event.preventDefault()
     extraStuff = null;
@@ -171,6 +158,12 @@ function Pomodoro() {
    * Called whenever the play/pause button is clicked.
    */
   function playPause() {
+    if(!timerStatus){
+      setSession({
+        label: "Focusing",
+        timeRemaining: focusDuration*60
+      })
+    }
     setTimerStatus(true)
     setIsTimerRunning((prevState) => {
       const nextState = !prevState;
