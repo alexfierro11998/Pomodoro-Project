@@ -124,17 +124,21 @@ function Pomodoro() {
   
 
   function barWidth(session) {
-    if(session.label === "Focusing"){
+    if(session)
+    {if(session.label === "Focusing"){
       const barFocus = focusDuration
       let currentBar = (((barFocus*60) - session?.timeRemaining)*100)/ (barFocus*60)
+      console.log(session?.timeRemaining)
       return currentBar
     }
-    const barFocus = breakDuration
-    let currentBar = (((barFocus*60) - session?.timeRemaining)*100)/ (barFocus*60)
-    return currentBar
+    else if(session.label === "On Break"){
+      const barFocus = breakDuration
+      let currentBar = (((barFocus*60) - session?.timeRemaining)*100)/ (barFocus*60)
+      return currentBar
+    }}
+    return 0
   }
-
- 
+  console.log(barWidth(session))
   const stopButtonFunction = event => {
     event.preventDefault()
     extraStuff = null;
@@ -207,7 +211,7 @@ function Pomodoro() {
            role="progressbar"
            aria-valuemin="0"
            aria-valuemax="100"
-           aria-valuenow={`${barWidth(session)}`} // TODO: Increase aria-valuenow as elapsed time increases
+           aria-valuenow={barWidth(session)} // TODO: Increase aria-valuenow as elapsed time increases
            style={{ width: `${barWidth(session)}%` }} // TODO: Increase width % as elapsed time increases
          />
        </div>
@@ -235,7 +239,7 @@ function Pomodoro() {
           role="progressbar"
           aria-valuemin="0"
           aria-valuemax="100"
-          aria-valuenow={`${barWidth(session)}`} // TODO: Increase aria-valuenow as elapsed time increases
+          aria-valuenow={barWidth(session)} // TODO: Increase aria-valuenow as elapsed time increases
           style={{ width: `${barWidth(session)}%` }} // TODO: Increase width % as elapsed time increases
         />
       </div>
